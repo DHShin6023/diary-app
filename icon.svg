@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="110" fill="#C17F4B"/>
+  <!-- Book spine -->
+  <rect x="90" y="90" width="48" height="332" rx="10" fill="#9A6030"/>
+  <!-- Book pages -->
+  <rect x="128" y="90" width="290" height="332" rx="10" fill="#FFF8F0"/>
+  <!-- Lines -->
+  <line x1="162" y1="190" x2="388" y2="190" stroke="#E8D5C4" stroke-width="14" stroke-linecap="round"/>
+  <line x1="162" y1="240" x2="388" y2="240" stroke="#E8D5C4" stroke-width="14" stroke-linecap="round"/>
+  <line x1="162" y1="290" x2="388" y2="290" stroke="#E8D5C4" stroke-width="14" stroke-linecap="round"/>
+  <line x1="162" y1="340" x2="290" y2="340" stroke="#E8D5C4" stroke-width="14" stroke-linecap="round"/>
+  <!-- Heart accent -->
+  <path d="M255 138 c0-18 14-30 28-22 14-8 28 4 28 22 0 14-28 36-28 36 s-28-22-28-36z" fill="#C17F4B" opacity="0.7"/>
+</svg>
