@@ -17,6 +17,37 @@
 </head>
 <body>
 
+  <!-- ── PIN 잠금 화면 ── -->
+  <div id="pinOverlay" class="pin-overlay">
+    <div class="pin-inner">
+      <div class="pin-icon">📓</div>
+      <h2 class="pin-app-name">나의 일기</h2>
+      <p class="pin-label" id="pinLabel">비밀번호를 입력해주세요</p>
+      <div class="pin-dots" id="pinDots">
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+        <span class="pin-dot"></span>
+      </div>
+      <p class="pin-error" id="pinError"></p>
+      <div class="numpad">
+        <button class="np-btn" data-n="1">1</button>
+        <button class="np-btn" data-n="2">2</button>
+        <button class="np-btn" data-n="3">3</button>
+        <button class="np-btn" data-n="4">4</button>
+        <button class="np-btn" data-n="5">5</button>
+        <button class="np-btn" data-n="6">6</button>
+        <button class="np-btn" data-n="7">7</button>
+        <button class="np-btn" data-n="8">8</button>
+        <button class="np-btn" data-n="9">9</button>
+        <div class="np-empty"></div>
+        <button class="np-btn" data-n="0">0</button>
+        <button class="np-btn np-del" id="pinDel">⌫</button>
+      </div>
+      <button class="pin-cancel-btn" id="pinCancelBtn" style="display:none">취소</button>
+    </div>
+  </div>
+
   <!-- ── Header ── -->
   <header class="app-header" id="appHeader">
     <button class="btn-icon" id="btnBack" aria-label="뒤로가기">
@@ -52,6 +83,15 @@
       <div class="recent-section">
         <h3 class="section-title">최근 일기</h3>
         <div class="entry-list" id="recentList"></div>
+      </div>
+
+      <div class="settings-row">
+        <button class="btn-change-pin" id="btnChangePinOpen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          비밀번호 변경
+        </button>
       </div>
     </div>
 

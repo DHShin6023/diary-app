@@ -13,11 +13,14 @@ const App = {
   async init() {
     await DB.init();
     this.bindEvents();
+    Pin.bindEvents();
     // Set initial header state
     document.getElementById('btnBack').classList.add('hidden');
     document.getElementById('btnMore').classList.add('hidden');
     await this.renderCalendar();
     await this.renderRecent();
+    // 앱 시작 시 PIN 잠금
+    Pin.show('unlock', false);
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
     }
@@ -439,6 +442,148 @@ const App = {
     el.classList.add('show');
     clearTimeout(this._toastTimer);
     this._toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+  }
+};
+
+/* ── PIN Manager ── */
+const Pin = {
+  KEY: 'diaryPin',
+  DEFAULT: '6023',
+  // mode: 'unlock' | 'change-cur' | 'change-new' | 'change-confirm'
+  mode: 'unlock',
+  input: '',
+  newPin: '',
+
+  get() { return localStorage.getItem(this.KEY) || this.DEFAULT; },
+  set(v) { localStorage.setItem(this.KEY, v); },
+
+  show(mode, cancelable = false) {
+    this.mode = mode;
+    this.input = '';
+    this.newPin = '';
+    this._updateLabel();
+    this._renderDots();
+    document.getElementById('pinError').textContent = '';
+    document.getElementById('pinCancelBtn').style.display = cancelable ? 'block' : 'none';
+    document.getElementById('pinOverlay').classList.remove('hidden');
+  },
+
+  hide() {
+    document.getElementById('pinOverlay').classList.add('hidden');
+  },
+
+  _labels: {
+    'unlock':          '비밀번호를 입력해주세요',
+    'change-cur':      '현재 비밀번호를 입력해주세요',
+    'change-new':      '새 비밀번호를 입력해주세요',
+    'change-confirm':  '새 비밀번호를 한 번 더 입력해주세요'
+  },
+
+  _updateLabel() {
+    document.getElementById('pinLabel').textContent = this._labels[this.mode];
+  },
+
+  press(n) {
+    if (this.input.length >= 4) return;
+    this.input += n;
+    this._renderDots();
+    if (this.input.length === 4) setTimeout(() => this._submit(), 120);
+  },
+
+  del() {
+    this.input = this.input.slice(0, -1);
+    this._renderDots();
+  },
+
+  _renderDots() {
+    document.querySelectorAll('.pin-dot').forEach((dot, i) => {
+      dot.classList.toggle('filled', i < this.input.length);
+      dot.classList.remove('err');
+    });
+  },
+
+  _submit() {
+    const pin = this.input;
+    this.input = '';
+
+    if (this.mode === 'unlock') {
+      if (pin === this.get()) {
+        this.hide();
+      } else {
+        this._error('비밀번호가 틀렸어요');
+      }
+
+    } else if (this.mode === 'change-cur') {
+      if (pin === this.get()) {
+        this.mode = 'change-new';
+        this._updateLabel();
+        document.getElementById('pinError').textContent = '';
+        this._renderDots();
+      } else {
+        this._error('현재 비밀번호가 틀렸어요');
+      }
+
+    } else if (this.mode === 'change-new') {
+      this.newPin = pin;
+      this.mode = 'change-confirm';
+      this._updateLabel();
+      document.getElementById('pinError').textContent = '';
+      this._renderDots();
+
+    } else if (this.mode === 'change-confirm') {
+      if (pin === this.newPin) {
+        this.set(pin);
+        this.hide();
+        App.toast('비밀번호를 변경했어요 🔒');
+      } else {
+        this._error('비밀번호가 일치하지 않아요');
+        // 새 비밀번호 단계로 되돌아가기
+        setTimeout(() => {
+          this.mode = 'change-new';
+          this.newPin = '';
+          this.input = '';
+          this._updateLabel();
+          document.getElementById('pinError').textContent = '';
+          this._renderDots();
+        }, 650);
+      }
+    }
+
+    this._renderDots();
+  },
+
+  _error(msg) {
+    document.getElementById('pinError').textContent = msg;
+    const dots = document.getElementById('pinDots');
+    document.querySelectorAll('.pin-dot').forEach(d => {
+      d.classList.add('filled', 'err');
+    });
+    dots.classList.add('shake');
+    setTimeout(() => {
+      dots.classList.remove('shake');
+      this._renderDots();
+    }, 600);
+  },
+
+  bindEvents() {
+    // 숫자 버튼
+    document.querySelectorAll('.np-btn[data-n]').forEach(btn => {
+      btn.addEventListener('click', () => this.press(btn.dataset.n));
+    });
+    // 지우기
+    document.getElementById('pinDel').addEventListener('click', () => this.del());
+    // 취소 (비밀번호 변경 시)
+    document.getElementById('pinCancelBtn').addEventListener('click', () => this.hide());
+    // 비밀번호 변경 열기
+    document.getElementById('btnChangePinOpen').addEventListener('click', () => {
+      this.show('change-cur', true);
+    });
+    // 백그라운드 복귀 시 잠금
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        this.show('unlock', false);
+      }
+    });
   }
 };
 
