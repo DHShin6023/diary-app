@@ -1,4 +1,4 @@
-const CACHE = 'diary-v1';
+const CACHE = 'diary-v2';
 const ASSETS = ['./', './index.html', './style.css', './db.js', './app.js', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e => {
