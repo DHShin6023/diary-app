@@ -299,17 +299,20 @@ body {
   width: 100%; min-height: 180px;
   border: 1px solid var(--border);
   border-radius: var(--r-s);
-  padding: 15px;
-  font-size: 16px; line-height: 1.9;
+  padding: 12px 15px;
+  font-size: 16px; line-height: 32px;
   color: var(--txt1);
   background: var(--card);
   outline: none; resize: none;
   margin-bottom: 12px;
   transition: border-color .2s;
   background-image: repeating-linear-gradient(
-    transparent, transparent 34px,
-    var(--border-l) 34px, var(--border-l) 35px
+    transparent, transparent 31px,
+    var(--border-l) 31px, var(--border-l) 32px
   );
+  background-size: 100% 32px;
+  background-position: 0 12px;
+  background-attachment: local;
 }
 .editor-body:focus { border-color: var(--accent); }
 .editor-body::placeholder { color: var(--txt3); }
@@ -402,15 +405,18 @@ body {
 
 .detail-body {
   background: var(--card); border-radius: var(--r);
-  padding: 18px; font-size: 15px; line-height: 1.95;
+  padding: 14px 18px; font-size: 15px; line-height: 32px;
   color: var(--txt1); box-shadow: var(--shadow-s);
   white-space: pre-wrap; word-break: break-word;
   margin-bottom: 12px; min-height: 60px;
   border: 1px solid var(--border-l);
   background-image: repeating-linear-gradient(
-    transparent, transparent 36px,
-    var(--border-l) 36px, var(--border-l) 37px
+    transparent, transparent 31px,
+    var(--border-l) 31px, var(--border-l) 32px
   );
+  background-size: 100% 32px;
+  background-position: 0 14px;
+  background-attachment: local;
 }
 .detail-body:empty::after {
   content: '내용 없음';
