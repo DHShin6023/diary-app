@@ -302,14 +302,11 @@ body {
   padding: 12px 15px;
   font-size: 16px; line-height: 32px;
   color: var(--txt1);
-  background: var(--card);
+  background-color: var(--card);
   outline: none; resize: none;
   margin-bottom: 12px;
   transition: border-color .2s;
-  background-image: repeating-linear-gradient(
-    transparent, transparent 31px,
-    var(--border-l) 31px, var(--border-l) 32px
-  );
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='32'%3E%3Cpath d='M0,30.6 C130,29.8 260,31.5 390,30.7 C520,29.9 660,31.4 800,30.6' stroke='%23DEC5AE' stroke-width='1' stroke-linecap='round' fill='none' opacity='0.85'/%3E%3Cpath d='M0,31.4 C170,30.9 340,31.9 510,31.2 C650,30.7 730,31.7 800,31.3' stroke='%23DEC5AE' stroke-width='0.6' stroke-linecap='round' fill='none' opacity='0.4'/%3E%3C/svg%3E");
   background-size: 100% 32px;
   background-position: 0 12px;
   background-attachment: local;
@@ -410,10 +407,7 @@ body {
   white-space: pre-wrap; word-break: break-word;
   margin-bottom: 12px; min-height: 60px;
   border: 1px solid var(--border-l);
-  background-image: repeating-linear-gradient(
-    transparent, transparent 31px,
-    var(--border-l) 31px, var(--border-l) 32px
-  );
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='32'%3E%3Cpath d='M0,30.6 C130,29.8 260,31.5 390,30.7 C520,29.9 660,31.4 800,30.6' stroke='%23DEC5AE' stroke-width='1' stroke-linecap='round' fill='none' opacity='0.85'/%3E%3Cpath d='M0,31.4 C170,30.9 340,31.9 510,31.2 C650,30.7 730,31.7 800,31.3' stroke='%23DEC5AE' stroke-width='0.6' stroke-linecap='round' fill='none' opacity='0.4'/%3E%3C/svg%3E");
   background-size: 100% 32px;
   background-position: 0 14px;
   background-attachment: local;
